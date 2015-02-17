@@ -48,7 +48,7 @@ struct GetSocialSDKConfigurationPropertyStruct {
     __unsafe_unretained NSString *const PLACEHOLDER_CONTENT; // textStyle
     __unsafe_unretained NSString *const OVERSCROLL; // textStyle
     __unsafe_unretained NSString *const INPUT_FIELD; // textStyle, color
-    __unsafe_unretained NSString *const HINT; // textStyle
+    __unsafe_unretained NSString *const HINT; // color
     __unsafe_unretained NSString *const TOOLTIP; // textStyle, drawable
     
     __unsafe_unretained NSString *const AVATAR_BORDER_SIZE; // dimension
