@@ -66,6 +66,7 @@ typedef NS_ENUM(NSInteger,GetSocialScaleMode) {
 #define kGetSocialProvider @"providerId"
 
 #define kGetSocialConversationID @"conversationId"
+#define kGetSocialRoomName @"roomName"
 
 #define kGetSocialInviteImage @"inviteImage"
 #define kGetSocialInviteText @"inviteText"

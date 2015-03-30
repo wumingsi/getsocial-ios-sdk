@@ -89,6 +89,7 @@
  * - kGetSocialActivityTags: Open GetSocialViewTypeActivities and set the tags to add to any activity posted there
  * - kGetSocialActivityGroup: Open GetSocialViewTypeActivities and set the group to show activities for
  * - kGetSocialSource: A string that defines the source from where GetSocial view was opened
+ * - kGetSocialRoomName: A string that defines the unique name of the global chat room
  */
 - (void) open:(GetSocialViewType) viewType withProperties:(NSDictionary *) properties;
 
