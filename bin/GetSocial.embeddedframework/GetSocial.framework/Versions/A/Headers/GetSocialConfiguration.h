@@ -58,10 +58,18 @@
  * Sets the dimension for a specific elementID with an implicit option to turn off any scaling.
  *
  * @param dimension The dimension value.
- * @param disableScaling YES if scaling calculations are already done.
+ * @param prescaled YES if scaling calculations are already done.
  * @param elementID The ID of the element to customise.
  */
--(void)setDimension:(CGFloat)dimension disableScaling:(BOOL)disableScaling forElementID:(NSString*)elementID;
+-(void) setDimension:(CGFloat)dimension prescaled:(BOOL)prescaled forElementID:(NSString*)elementID;
+
+/**
+ * Sets the aspect ratio for a specific elementID.
+ *
+ * @param aspectRatio The aspectRatio value.
+ * @param elementID The ID of the element to customise.
+ */
+- (void) setAspectRatio:(CGFloat)aspectRatio forElementID:(NSString*)elementID;
 
 /**
  * Sets the text style for a specific elementID.
@@ -136,5 +144,11 @@
  */
 - (void)setFlag:(BOOL)flagValue forID:(NSString*)flagID;
 
+/**
+ * Specifies the base width of the designs for your GetSocial integration.
+ *
+ * @param baseDesignWidth The design width.
+ */
+- (void) setBaseDesignWidth:(CGFloat)baseDesignWidth;
 
 @end

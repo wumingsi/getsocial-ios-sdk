@@ -126,6 +126,12 @@ struct GetSocialConfigurationPropertyStruct {
     __unsafe_unretained NSString *const ICON_INVITE_FRIENDS_COLORED; // drawable
     __unsafe_unretained NSString *const ICON_INVITE_FRIENDS_WHITE; // drawable
     __unsafe_unretained NSString *const ENABLE_CHAT_MIGRATION;
+    __unsafe_unretained NSString *const ACTIVITY_CALL_TO_ACTION; // textStyle
+    __unsafe_unretained NSString *const ACTIVITY_CALL_TO_ACTION_BUTTON_NORMAL; // drawable
+    __unsafe_unretained NSString *const ACTIVITY_CALL_TO_ACTION_BUTTON_PRESSED; // drawable
+    __unsafe_unretained NSString *const GAME_BADGE; // drawable;
+    __unsafe_unretained NSString *const ACTIVITY_IMAGE_RATIO; // dimension
+    __unsafe_unretained NSString *const PLACEHOLDER_ACTIVITY_IMAGE; // drawable
 };
 
 extern const struct GetSocialConfigurationPropertyStruct Property;

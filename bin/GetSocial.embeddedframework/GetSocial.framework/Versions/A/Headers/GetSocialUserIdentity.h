@@ -18,12 +18,15 @@
  * @param displayName can be nil.
  * @return object instance. nil if the initialization failed.
  */
--(id) initWithGuid:(NSString*) guid displayName:(NSString*) displayName;
+-(id) initWithGuid:(NSString*) guid displayName:(NSString*) displayName avatar:(NSString*)avatarURL;
 
 /** Unique Identifier of the user. */
 @property (strong,readonly) NSString* guid;
 
-/** Display name of the user. Can be nil if no display name is avaialble. */
+/** Display name of the user. Can be nil if no display name is available. */
 @property (strong,readonly) NSString* displayName;
+
+/** The Avatar URL of the user. Can be nil if no avatar URL is available. */
+@property (strong,readonly) NSString* avatarURL;
 
 @end

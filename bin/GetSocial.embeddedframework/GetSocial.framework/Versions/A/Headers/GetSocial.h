@@ -14,6 +14,7 @@
 #import "GetSocialAuthState.h"
 #import "GetSocialConfigurationProperties.h"
 #import "GetSocialConfiguration.h"
+#import "GetSocialLeaderboard.h"
 
 /** GetSocial Singleton*/
 @interface GetSocial : NSObject
@@ -46,11 +47,15 @@
 /** Current user authentication status */
 @property (nonatomic, readonly) BOOL isUserAuthenticated;
 
+/** Current chat status */
+@property (nonatomic, readonly) BOOL isChatEnabled;
+
 /** Configuration of the SDK */
 @property (nonatomic, strong, readonly) GetSocialConfiguration* configuration;
 
 /** Version of the GetSocial SDK */
 @property (nonatomic, readonly) NSString* sdkVersion;
+
 
 #pragma mark - Game Authentication Methods
 /** @name Game Authentication Methods */
@@ -167,36 +172,17 @@
 /** @name Activities */
 
 /**
- * Posts a Purchase Activity
- *
- * @param activityText The text of the activity (can't be nil)
- * @param itemID The ID of the item purchased (will be sent in the callback if someone clicks the action button, can't be nil)
- * @param itemName The name of the item purchased (can't be nil, max 16 characters)
- * @param imageURL The URL for the image of the item purchased. (suggested size: 48 x 48)
- * @param buttonText The text for the action button dislayed in the purchase activity (max 10 characters)
- * @param tags An array of strings that define all the tags for the activity.
- *
- * @return YES if valid parameters were passed, NO otherwise
- */
-- (BOOL) postPurchaseActivity:(NSString *)activityText andItemID:(NSString *)itemID andItemName:(NSString *)itemName andImageURL:(NSString *)imageURL andButtonText:(NSString *)buttonText andTags:(NSArray*) tags;
-
-/**
  * Posts an Activity
  *
  * @param activityText The text of the activity
  * @param image The image to be posted along with the activity.
+ * @param buttonText The text of the activity button, or null if no button text should be shown.
+ * @param action The action generated on click, or null if no button or image is shown.
  * @param tags An array of strings that define all the tags for the activity.
  * @param success Executed when the activity is posted successfully.
  * @param failure Executed when posting the activity failed.
  */
-- (void) postActivity:(NSString *)activityText withImage:(UIImage *)image andTags:(NSArray*)tags success:(void (^)()) success failure:(void (^)(NSError* error)) failure;
-
-/**
- * Register a Handler Block for Purchase Activity. This block is executed when someone taps on the action button within a Purchase type activity. The itemID is passed as an argument.
- *
- * @param onPurchaseActivityButtonPressed Block to be executed if the action button is tapped
- */
-- (void) setPurchaseActivityButtonPressedHandler:(void (^)(NSString *itemID)) onPurchaseActivityButtonPressed;
+- (void) postActivity:(NSString *)activityText withImage:(UIImage *)image buttonText:(NSString*) buttonText action:(NSString*) action andTags:(NSArray*)tags success:(void (^)()) success failure:(void (^)(NSError* error)) failure;
 
 /**
  * Takes a screenshot that can be posted later.
@@ -224,11 +210,18 @@
 /** @name Custom Handlers */
 
 /**
- * Register a block to override GetSocial's default behaviour while clicking on a user avatar. Any click on an avatar from anywhere in the SDK will call this block.
+ * Register a block to override GetSocial's default behaviour when clicking on a user avatar. Any click on an avatar from anywhere in the SDK will call this block.
  *
  * @param onUserAvatarClickHandler Block to be executed when a user clicks on a user avatar, user guid will be provided. Return YES if action was handled by the game. Return NO for default GetSocial behaviour
  */
 - (void) setOnUserAvatarClickHandler:(BOOL (^)(NSString *getSocialUserID)) onUserAvatarClickHandler;
+
+/**
+ * Register a block to be executed when clicking on the game avatar. Any click on the game avatar avatar from anywhere in the SDK will call this block.
+ *
+ * @param onGameAvatarClickHandler Block to be executed when a user clicks on the game avatar. Return YES if action was handled by the game. Return NO for default GetSocial behaviour
+ */
+- (void) setOnGameAvatarClickHandler:(BOOL (^)()) onGameAvatarClickHandler;
 
 /**
  * Register a block to get updates on the notifications (conversations and general notifications)
@@ -243,6 +236,14 @@
  * @param onLoginRequestHandler Block to be executed to login a user.
  */
 - (void) setOnLoginRequestHandler:(void (^)()) onLoginRequestHandler;
+
+/**
+ * Register a block for handling activity action button click. This block is executed when someone clicks on the action button within a Activity. The action is passed as an argument.
+ *
+ * @param onActivityActionClick Block to be executed if the action button is tapped. Action contains the value defined when Activity was posted.
+ */
+- (void) setOnActivityActionClickHandler:(void (^)(NSString *action)) onActivityActionClickHandler;
+
 
 #pragma mark - Cloud Save Methods
 /** @name Cloud Save */
@@ -264,4 +265,56 @@
  */
 - (void) getSavedGameStateWithSuccess:(void (^)(NSString *gameState)) success failure:(void (^)(NSError* error)) failure;
 
+#pragma mark - Leaderboards Methods
+/** @name Leaderboards */
+
+/**
+ * Gets leaderboard by identifier.
+ *
+ * @param leaderboardID The identifier of the leaderboard.
+ * @param success Executed with the leaderboard object when the leaderboard is retrieved successfully.
+ * @param failure Executed when fetching the leaderboard failed.
+ */
+- (void) getLeaderboard:(NSString*)leaderboardID success:(void (^)(GetSocialLeaderboard *leaderboard)) success failure:(void (^)(NSError* error)) failure;
+
+/**
+ * Gets leaderboards by array of identifiers.
+ *
+ * @param leaderboardIDs An array of identifiers of the leaderboard.
+ * @param success Executed with an array of leaderboards when the leaderboards are retrieved successfully.
+ * @param failure Executed when fetching the leaderboards failed.
+ */
+- (void) getLeaderboards:(NSArray*)leaderboardIDs success:(void (^)(NSArray *leaderboards)) success failure:(void (^)(NSError* error)) failure;
+
+/**
+ * Gets leaderboards page by page.
+ *
+ * @param offset The offset from which leaderboards will be retrieved.
+ * @param count The count of the leaderboards. Could be less than expected if there are less leaderboards.
+ * @param success Executed with an array of leaderboards when the leaderboards are retrieved successfully.
+ * @param failure Executed when fetching the leaderboard failed.
+ */
+- (void) getLeaderboards:(NSInteger)offset count:(NSInteger)count success:(void (^)(NSArray *leaderboards)) success failure:(void (^)(NSError* error)) failure;
+
+
+/**
+ * Gets scores page by page.
+ *
+ * @
+ * @param offset The offset from which scores will be retrieved.
+ * @param count The count of the scores. Could be less than expected if there are less scores.
+ * @param success Executed with an array of scores when the scores are retrieved successfully.
+ * @param failure Executed when fetching the scores failed.
+ */
+- (void) getLeaderboardScores:(NSString*)leaderboardID offset:(NSInteger)offset count:(NSInteger)count scoreType:(GetSocialLeaderboardScoreType)scoreType success:(void (^)(NSArray *scores)) success failure:(void (^)(NSError* error)) failure;
+
+/**
+ * Submits the score to a specific leaderboard.
+ *
+ * @param score The score to be submitted.
+ * @param leaderboardID The id of the leaderboard on which the score will be recorded.
+ * @param success Executed with a current position in the leaderboard.
+ * @param failure Executed when submitting the score failes.
+ */
+- (void) submitLeaderboardScore:(NSInteger)score forLeaderboardID:(NSString*)leaderboardID success:(void (^)(NSInteger position)) success failure:(void (^)(NSError* error)) failure;
 @end

@@ -31,6 +31,24 @@ typedef NS_ENUM(NSInteger,GetSocialViewType) {
     GetSocialViewTypeSmartInvite     = 8
 };
 
+/** Constants for the Leaderboard score types  */
+typedef NS_ENUM(NSInteger, GetSocialLeaderboardScoreType) {
+    /** Contains the scores of all the users */
+    GetSocialLeaderboardScoreTypeWorld = 1,
+    /** Contains the scores of the users that you follow */
+    GetSocialLeaderboardScoreTypeFollowing = 2,
+    /** Contains a subset of all users scores*/
+    GetSocialLeaderboardScoreTypeOthers = 3
+};
+
+/** Constants for the Leaderboard score direction  */
+typedef NS_ENUM(NSInteger, GetSocialLeaderboardDirectionType) {
+    /** The type is ASC */
+    GetSocialLeaderboardDirectionTypeASC = 1,
+    /** The type is DESC */
+    GetSocialLeaderboardDirectionTypeDESC = 2
+};
+
 typedef NSString* GetSocialProvider;
 
 /**
