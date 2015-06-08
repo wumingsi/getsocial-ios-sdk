@@ -14,7 +14,10 @@
 #define GetSocialInviteInfoKeyInviteId @"invite_id"
 #define GetSocialInviteInfoKeyInvitedUserIds @"invited_users_ids"
 
+/** The definition of the success callback.*/
 typedef void (^GetSocialInviteSuccessCallback)(NSDictionary* inviteInfo);
+
+/** The definition of the cancel callback.*/
 typedef void (^GetSocialCancelCallback)();
 
 /**
@@ -22,8 +25,13 @@ typedef void (^GetSocialCancelCallback)();
  */
 @interface GetSocialInvitePlugin : GetSocialPlugin
 
+/** The default subject to use.*/
 @property (nonatomic, strong) id inviteSubject;
+
+/** The default text to use.*/
 @property (nonatomic, strong) id inviteText;
+
+/** The default image to use.*/
 @property (nonatomic, strong) NSString* inviteImageUrl;
 
 /**
@@ -40,10 +48,11 @@ typedef void (^GetSocialCancelCallback)();
  * @param subject Subject to be sent with the invite
  * @param text Text to be sent with the invite
  * @param image Image to be sent with the invite
+ * @param referralDataUrl URL to be sent with the invite
  * @param successCallback has to be called when invite friends was successful
  * @param cancelCallback has to be called when the user aborted
  * @param errorCallback when there was an error
  */
--(void) inviteFriendsWithSubject:(NSString*) subject text:(NSString*) text image:(UIImage*) image success:(GetSocialInviteSuccessCallback) successCallback cancel:(GetSocialCancelCallback) cancelCallback error:(GetSocialErrorCallback) errorCallback;
+-(void) inviteFriendsWithSubject:(NSString*) subject text:(NSString*) text referralDataUrl:(NSString*) referralDataUrl image:(UIImage*) image success:(GetSocialInviteSuccessCallback) successCallback cancel:(GetSocialCancelCallback) cancelCallback error:(GetSocialErrorCallback) errorCallback;
 
 @end

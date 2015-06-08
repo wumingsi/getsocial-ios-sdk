@@ -15,7 +15,10 @@
     
 }
 
+/** The metadata of the Leaderboard.*/
 @property(nonatomic,strong) GetSocialLeaderboardMetaData *leaderboardMetaData;
+
+/** Score of the current user.*/
 @property(nonatomic,strong) GetSocialLeaderboardScore *currentScore;
 
 

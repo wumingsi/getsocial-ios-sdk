@@ -49,6 +49,20 @@ typedef NS_ENUM(NSInteger, GetSocialLeaderboardDirectionType) {
     GetSocialLeaderboardDirectionTypeDESC = 2
 };
 
+/** Constants for the User Generated Content  */
+typedef NS_ENUM(NSInteger, GetSocialUserGeneratedContentType) {
+    /** Activity */
+    GetSocialUserGeneratedContentTypeActivity = 1,
+    /** Activity comment */
+    GetSocialUserGeneratedContentTypeComment = 2,
+    /** Private Chat message */
+    GetSocialUserGeneratedContentTypePrivateChatMessage = 3,
+    /** Open room chat message */
+    GetSocialUserGeneratedContentTypeGroupChatMessage = 4,
+    /** Open room chat message */
+    GetSocialUserGeneratedContentTypePublicChatMessage = 5
+};
+
 typedef NSString* GetSocialProvider;
 
 /**
@@ -89,6 +103,7 @@ typedef NS_ENUM(NSInteger,GetSocialScaleMode) {
 #define kGetSocialInviteImage @"inviteImage"
 #define kGetSocialInviteText @"inviteText"
 #define kGetSocialInviteSubject @"inviteSubject"
+#define kGetSocialInviteReferralData @"inviteReferralData"
 
 #define kGetSocialActivityTags @"tags"
 #define kGetSocialActivityGroup @"group"
@@ -96,10 +111,10 @@ typedef NS_ENUM(NSInteger,GetSocialScaleMode) {
 #define kGetSocialActivityID @"activityId"
 #define kGetSocialTitle @"title"
 
-#define kGetSocialSource @"source"
-
 #define kGetSocialAuthInfoKeyToken @"token"
 #define kGetSocialAuthInfoKeyUserId @"user_id"
+#define kGetSocialAuthInfoKeyDisplayName @"display_name"
+#define kGetSocialAuthInfoKeyAvatar @"avatar"
 #define kGetSocialAuthInfoKeyExternalUserId @"external_user_id"
 #define kGetSocialAuthPermissionsFacebook @[@"email", @"user_friends"]
 

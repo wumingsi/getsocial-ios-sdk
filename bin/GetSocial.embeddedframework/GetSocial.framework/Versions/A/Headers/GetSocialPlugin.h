@@ -14,12 +14,22 @@
 
 @interface GetSocialPlugin : NSObject
 
+/** The name of the plugin.*/
 @property (nonatomic, strong) id title;
+
+/** The description of the plugin.*/
 @property (nonatomic, strong) id details;
+
+/** The image of the plugin.*/
 @property (nonatomic, strong) NSString* imageUrl;
+
+/** If the plugin is enabled.*/
 @property (nonatomic) BOOL enabled;
+
+/** The sort order of the plugin.*/
 @property (nonatomic) NSInteger displayOrder;
 
+/** If the plugin is available for the current device.*/
 - (BOOL) isAvailableForDevice;
 
 @end

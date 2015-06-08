@@ -91,9 +91,9 @@
  * - kGetSocialInviteImage: Open GetSocialViewTypeSmartInvite and set an image to be sent with the invite
  * - kGetSocialInviteText: Open GetSocialViewTypeSmartInvite and set a text to be sent with the invite
  * - kGetSocialInviteSubject: Open GetSocialViewTypeSmartInvite and set a subject to be sent with the invite
+ * - kGetSocialInviteReferralData: Open GetSocialViewTypeSmartInvite and set custom data to be sent with the invite
  * - kGetSocialActivityTags: Open GetSocialViewTypeActivities and set the tags to add to any activity posted there
  * - kGetSocialActivityGroup: Open GetSocialViewTypeActivities and set the group to show activities for
- * - kGetSocialSource: A string that defines the source from where GetSocial view was opened
  * - kGetSocialRoomName: A string that defines the unique name of the global chat room
  */
 - (void) open:(GetSocialViewType) viewType withProperties:(NSDictionary *) properties;
@@ -140,9 +140,10 @@
  *
  * Supported Properties:
  *
- * - kGetSocialInviteImage: Open GetSocialViewTypeSmartInvite and set an image to be sent with the invite
- * - kGetSocialInviteText: Open GetSocialViewTypeSmartInvite and set a text to be sent with the invite
- * - kGetSocialInviteSubject: Open GetSocialViewTypeSmartInvite and set a subject to be sent with the invite
+ * - kGetSocialInviteImage: set an image to be sent with the invite
+ * - kGetSocialInviteText: set a text to be sent with the invite
+ * - kGetSocialInviteSubject: set a subject to be sent with the invite
+ * - kGetSocialInviteReferralData: set custom data to be sent with the invite
  */
 - (void) inviteFriendsUsingProvider:(GetSocialProvider)provider withProperties:(NSDictionary*) properties;
 
@@ -240,10 +241,36 @@
 /**
  * Register a block for handling activity action button click. This block is executed when someone clicks on the action button within a Activity. The action is passed as an argument.
  *
- * @param onActivityActionClick Block to be executed if the action button is tapped. Action contains the value defined when Activity was posted.
+ * @param onActivityActionClickHandler Block to be executed if the action button is tapped. Action contains the value defined when Activity was posted.
  */
 - (void) setOnActivityActionClickHandler:(void (^)(NSString *action)) onActivityActionClickHandler;
 
+/**
+ * Register a block for handling referral data received. This block is executed when someone
+ * clicks on a invite link. The referralData is passed as argument.
+ *
+ * @param onReferralDataReceivedHandler Block to be executed when the invite link is clicked.
+ *
+ */
+- (void) setOnReferralDataReceivedHandler:(void (^)(NSArray *referralData)) onReferralDataReceivedHandler;
+
+/**
+ * Register a block to override Invite action. This block is executed when someone
+ * clicks on a invite button.
+ *
+ * @param onInviteButtonClickHandler Block to be executed when the invite button is clicked. Return YES if action was handled by the game. Return NO for default GetSocial behaviour
+ *
+ */
+- (void) setOnInviteButtonClickHandler:(BOOL (^)()) onInviteButtonClickHandler;
+
+/**
+ * Register a block to handle user generated content. This block is executed when a user
+ * sends any type of content through activities or chat.
+ *
+ * @param onUserGeneratedContentHandler Block to be executed when the content is ready to be send. Return the approved content to send or nil if the content shouldn't be send.
+ *
+ */
+- (void) setOnUserGeneratedContentHandler:(NSString* (^)(GetSocialUserGeneratedContentType type, NSString* content)) onUserGeneratedContentHandler;
 
 #pragma mark - Cloud Save Methods
 /** @name Cloud Save */
@@ -296,13 +323,13 @@
  */
 - (void) getLeaderboards:(NSInteger)offset count:(NSInteger)count success:(void (^)(NSArray *leaderboards)) success failure:(void (^)(NSError* error)) failure;
 
-
 /**
  * Gets scores page by page.
  *
- * @
+ * @param leaderboardID The identifier of the leaderboard.
  * @param offset The offset from which scores will be retrieved.
  * @param count The count of the scores. Could be less than expected if there are less scores.
+ * @param scoreType The type of score to retrieve, check enum GetSocialLeaderboardScoreType.
  * @param success Executed with an array of scores when the scores are retrieved successfully.
  * @param failure Executed when fetching the scores failed.
  */
@@ -312,7 +339,7 @@
  * Submits the score to a specific leaderboard.
  *
  * @param score The score to be submitted.
- * @param leaderboardID The id of the leaderboard on which the score will be recorded.
+ * @param leaderboardID The identifier of the leaderboard.
  * @param success Executed with a current position in the leaderboard.
  * @param failure Executed when submitting the score failes.
  */
