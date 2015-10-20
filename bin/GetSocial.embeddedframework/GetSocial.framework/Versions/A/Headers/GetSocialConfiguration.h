@@ -3,152 +3,210 @@
 //  GetSocialSDK
 //
 //  Created by Demian Denker on 05/02/15.
-//  Copyright (c) 2015 GrambleWorld. All rights reserved.
+//  Copyright (c) 2015 GetSocial. All rights reserved.
 //
-
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "GetSocialConstants.h"
 
+/**
+ *  The GetSocialConfiguration Singleton provides the main entry point for all UI customization
+ */
 @interface GetSocialConfiguration : NSObject
 
+#pragma mark - Singleton
+/** @name Singleton */
+
+/**
+ *  Gets the shared instance of GetSocialConfiguration
+ *
+ *  @return GetSocialConfiguration instance
+ */
 + (instancetype)sharedInstance;
 
-#pragma mark - Customisation Methods
+#pragma mark - General Customization Methods
+
+/**
+ * Loads a configuration from a configuration file
+ *
+ * @param filePath The the path to the configuration file.
+ */
+- (void)setConfiguration:(NSString*)filePath;
 
 /**
  * Clear SDK Customizations and set them to default
  *
  */
-- (void) clear;
+- (void)clear;
+
+/**
+ * Starts a new UI configuration transaction
+ *
+ */
+- (void)beginTransaction;
+
+/**
+ * Ends the current UI configuration transaction
+ *
+ */
+- (void)endTransaction;
+
+#pragma mark - Base Customization Methods
+
+/**
+ *  Sets the main design properties.
+ *
+ *  @param width     The width of the design.
+ *  @param height    The height of the design.
+ *  @param ppi       The ppi of the design.
+ *  @param scaleMode Could be two types:
+ *                   -  kGetSocialScaleModeConstantPhysicalSize - The size of all elements will be constant on different screens
+ *                   -  kGetSocialScaleModeScaleWithScreenSize - The size of all elements will be scaled according to the sceen
+ */
+- (void)setBaseDesign:(CGFloat)width height:(CGFloat)height ppi:(CGFloat)ppi scaleMode:(NSString*)scaleMode;
+
+/**
+ * Sets the base path for all the resources.
+ *
+ * @param path The path to the resources.
+ */
+- (void)setBasePath:(NSString*)path;
+
+#pragma mark - Images Customization Methods
 
 /**
  * Sets the image path for a specific elementID.
  *
- * @param path The path to the file.
- * @param elementID The ID of the element to customise.
+ * @param path          The path to the file.
+ * @param elementID     The ID of the element to customise.
  */
-- (void) setImagePath:(NSString*)path forElementID:(NSString*)elementID;
+- (void)setImagePath:(NSString*)path forElementID:(NSString*)elementID;
 
 /**
  * Sets the image for a specific elementID.
  *
- * @param image The image to use.
- * @param elementID The ID of the element to customise.
+ * @param image         The image to use.
+ * @param elementID     The ID of the element to customise.
  */
-- (void) setImageResource:(UIImage*)image forElementID:(NSString*)elementID;
+- (void)setImageResource:(UIImage*)image forElementID:(NSString*)elementID;
+
+#pragma mark - Color Customization Methods
 
 /**
  * Sets the image for a specific elementID.
  *
- * @param color The color to use.
- * @param elementID The ID of the element to customise.
+ * @param color         The color to use.
+ * @param elementID     The ID of the element to customise.
  */
-- (void) setColor:(UIColor*)color forElementID:(NSString*)elementID;
+- (void)setColor:(UIColor*)color forElementID:(NSString*)elementID;
+
+#pragma mark - Dimension Customization Methods
 
 /**
  * Sets the dimension for a specific elementID.
  *
- * @param dimension The dimension value.
- * @param elementID The ID of the element to customise.
+ * @param dimension     The dimension value.
+ * @param elementID     The ID of the element to customise.
  */
-- (void) setDimension:(CGFloat)dimension forElementID:(NSString*)elementID;
+- (void)setDimension:(CGFloat)dimension forElementID:(NSString*)elementID;
 
-/**
- * Sets the dimension for a specific elementID with an implicit option to turn off any scaling.
- *
- * @param dimension The dimension value.
- * @param prescaled YES if scaling calculations are already done.
- * @param elementID The ID of the element to customise.
- */
--(void) setDimension:(CGFloat)dimension prescaled:(BOOL)prescaled forElementID:(NSString*)elementID;
+#pragma mark - Aspect Ratio Customization Methods
 
 /**
  * Sets the aspect ratio for a specific elementID.
  *
- * @param aspectRatio The aspectRatio value.
- * @param elementID The ID of the element to customise.
+ * @param aspectRatio   The aspectRatio value.
+ * @param elementID     The ID of the element to customise.
  */
-- (void) setAspectRatio:(CGFloat)aspectRatio forElementID:(NSString*)elementID;
+- (void)setAspectRatio:(CGFloat)aspectRatio forElementID:(NSString*)elementID;
+
+#pragma mark - Text Style Customization Methods
 
 /**
  * Sets the text style for a specific elementID.
  *
- * @param font The font for the element.
- * @param fontColor The color of the font for the element.
- * @param elementID The ID of the element to customise.
+ * @param fontPath      The path to the font for the element.
+ * @param fontSize      The font size for the element.
+ * @param fontColor     The color of the font for the element.
+ * @param elementID     The ID of the element to customise.
  */
-- (void) setTextStyle:(UIFont*)font fontColor:(UIColor*) fontColor forElementID:(NSString*)elementID;
+- (void)setTextStyle:(NSString*)fontPath fontSize:(CGFloat)fontSize fontColor:(UIColor*)fontColor forElementID:(NSString*)elementID;
 
 /**
  * Sets the text style for a specific elementID.
  *
- * @param font The font for the element.
+ * @param fontPath      The path to the font for the element.
+ * @param fontSize      The font size for the element.
+ * @param fontColor     The color of the font for the element.
+ * @param strokeColor   The color of the stroke of the font for the element.
+ * @param strokeSize    The size of the stroke of the font for the element.
+ * @param strokeOffset  The offset of the stroke of the font for the element.
+ * @param elementID     The ID of the element to customise.
+ */
+- (void)setTextStyle:(NSString*)fontPath
+            fontSize:(CGFloat)fontSize
+           fontColor:(UIColor*)fontColor
+         strokeColor:(UIColor*)strokeColor
+          strokeSize:(CGFloat)strokeSize
+        strokeOffset:(CGSize)strokeOffset
+        forElementID:(NSString*)elementID;
+/**
+ * Sets the text style for a specific elementID.
+ *
+ * @param font      The font for the element.
  * @param fontColor The color of the font for the element.
- * @param strokeColor The color of the stroke of the font for the element.
- * @param strokeSize The size of the stroke of the font for the element.
- * @param strokeOffset The offset of the stroke of the font for the element.
  * @param elementID The ID of the element to customise.
  */
-- (void) setTextStyle:(UIFont*)font fontColor:(UIColor*) fontColor strokeColor:(UIColor*) strokeColor strokeSize:(CGFloat) strokeSize strokeOffset:(CGSize) strokeOffset forElementID:(NSString*)elementID;
+- (void)setTextStyle:(UIFont*)font fontColor:(UIColor*)fontColor forElementID:(NSString*)elementID;
 
 /**
- * Sets the animation style for a specific elementID.
+ * Sets the text style for a specific elementID.
  *
- * @param style The style of animation.
- * @param elementID The ID of the element to customise.
+ * @param font          The font for the element.
+ * @param fontColor     The color of the font for the element.
+ * @param strokeColor   The color of the stroke of the font for the element.
+ * @param strokeSize    The size of the stroke of the font for the element.
+ * @param strokeOffset  The offset of the stroke of the font for the element.
+ * @param elementID     The ID of the element to customise.
  */
-- (void) setAnimationStyle:(GetSocialAnimationStyle)style forElementID:(NSString*)elementID;
+- (void)setTextStyle:(UIFont*)font
+           fontColor:(UIColor*)fontColor
+         strokeColor:(UIColor*)strokeColor
+          strokeSize:(CGFloat)strokeSize
+        strokeOffset:(CGSize)strokeOffset
+        forElementID:(NSString*)elementID;
 
-/**
- * Sets the preferable width of GetSocial view.
- *
- * @param width The preferable width.
- */
-- (void) setPreferredWindowWidth:(CGFloat)width;
-
-/**
- * Sets the preferable height of GetSocial view.
- *
- * @param height The preferable height.
- */
-- (void) setPreferredWindowHeight:(CGFloat)height;
-
-/**
- * Override the default scale factor for the GetSocial view.
- *
- * @param scaleFactor Scale Factor multiplier.
- */
-- (void) setScaleFactor:(CGFloat)scaleFactor;
-
-/**
- * Override the default scale mode for the GetSocial view.
- *
- * @param scaleMode Scale Mode for GetSocial view.
- */
-- (void) setScaleMode:(GetSocialScaleMode)scaleMode;
-
-/**
- * Sets the base path for all the images.
- *
- * @param path The path to the images.
- */
-- (void)setBasePathForImages:(NSString*)path;
+#pragma mark - Flags Customization Methods
 
 /**
  * Sets flags.
  *
- * @param flagID The ID of the flag.
+ * @param flagID    The ID of the flag.
  * @param flagValue The value of the flag
- * 
+ *
  */
 - (void)setFlag:(BOOL)flagValue forID:(NSString*)flagID;
 
+#pragma mark - Animation Customization Methods
+
 /**
- * Specifies the base width of the designs for your GetSocial integration.
+* Sets the animation style for a specific elementID.
+*
+* @param style      The style of animation.
+* @param elementID  The ID of the element to customise.
+*/
+- (void)setAnimationStyle:(GetSocialAnimationStyle)style forElementID:(NSString*)elementID;
+
+#pragma mark - Insets Customization Methods
+
+/**
+ * Sets the insets for a specific elementID.
  *
- * @param baseDesignWidth The design width.
+ * @param top       Top inset.
+ * @param left      Left inset.
+ * @param bottom    Bottom inset.
+ * @param right     Right inset.
+ * @param elementID The ID of the element to customise.
  */
-- (void) setBaseDesignWidth:(CGFloat)baseDesignWidth;
+- (void)setInsets:(CGFloat)top right:(CGFloat)right bottom:(CGFloat)bottom left:(CGFloat)left forElementID:(NSString*)elementID;
 
 @end

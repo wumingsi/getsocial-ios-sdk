@@ -7,26 +7,40 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GetSocialConstants.h"
 
-/** Describes an authentictaed user. 
+/**
+ Describes an user.
  */
 @interface GetSocialUserIdentity : NSObject
 
 /**
- * initializes the object 
- * @param identifier unique identifier of the user. Must not be nil.
- * @param displayName can be nil.
- * @return object instance. nil if the initialization failed.
+ *  Unique Identifier of the user.
  */
--(id) initWithGuid:(NSString*) guid displayName:(NSString*) displayName avatar:(NSString*)avatarURL;
+@property(strong, readonly) NSString* guid;
 
-/** Unique Identifier of the user. */
-@property (strong,readonly) NSString* guid;
+/**
+ *  Display name of the user. Can be nil if no display name is available.
+ */
+@property(strong, readonly) NSString* displayName;
 
-/** Display name of the user. Can be nil if no display name is available. */
-@property (strong,readonly) NSString* displayName;
+/**
+ *  The Avatar Url of the user. Can be nil if no avatar URL is available.
+ */
+@property(strong, readonly) NSString* avatarUrl;
 
-/** The Avatar URL of the user. Can be nil if no avatar URL is available. */
-@property (strong,readonly) NSString* avatarURL;
+/**
+ * A dictionary with the providers and provider Ids of the user.
+ */
+@property(strong, readonly) NSDictionary* identities;
+
+/**
+ *  Gets the Id of the user for the specified provider
+ *
+ *  @param provider Id of the provider
+ *
+ *  @return Id of the user for the specified provider
+ */
+- (NSString*)idForProvider:(GetSocialProvider) provider;
 
 @end

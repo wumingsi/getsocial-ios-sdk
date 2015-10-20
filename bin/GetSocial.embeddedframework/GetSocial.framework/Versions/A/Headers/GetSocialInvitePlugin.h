@@ -15,7 +15,7 @@
 #define GetSocialInviteInfoKeyInvitedUserIds @"invited_users_ids"
 
 /** The definition of the success callback.*/
-typedef void (^GetSocialInviteSuccessCallback)(NSDictionary* inviteInfo);
+typedef void (^GetSocialInviteSuccessCallback)(NSDictionary *inviteInfo);
 
 /** The definition of the cancel callback.*/
 typedef void (^GetSocialCancelCallback)();
@@ -26,33 +26,33 @@ typedef void (^GetSocialCancelCallback)();
 @interface GetSocialInvitePlugin : GetSocialPlugin
 
 /** The default subject to use.*/
-@property (nonatomic, strong) id inviteSubject;
+@property(nonatomic, strong) id inviteSubject;
 
 /** The default text to use.*/
-@property (nonatomic, strong) id inviteText;
+@property(nonatomic, strong) id inviteText;
 
 /** The default image to use.*/
-@property (nonatomic, strong) NSString* inviteImageUrl;
+@property(nonatomic, strong) NSString *inviteImageUrl;
 
 /**
- * When this method is called, the plugin can assume:
+ *  Method handling the actual invite with a provider. It should call successCallback, cancelCallback or errorCallback at the end based on the result of the invite
  *
- * - the game is authenticated
- * - no other invite plugin is active.
- *
- * The plugin MUST NOT assume:
- * - handlers listing for the state change from unidentified to verifying have completed.
- *
- * inviteFriends MUST guarantee that exactly one of the callbacks is eventually called. (i.e. either completeCallback or cancelCallback)
- *
- * @param subject Subject to be sent with the invite
- * @param text Text to be sent with the invite
- * @param image Image to be sent with the invite
- * @param referralDataUrl URL to be sent with the invite
- * @param successCallback has to be called when invite friends was successful
- * @param cancelCallback has to be called when the user aborted
- * @param errorCallback when there was an error
+ *  @param subject          Subject to be sent with the invite
+ *  @param text             Text to be sent with the invite
+ *  @param referralDataUrl  URL to be sent with the invite
+ *  @param image            Image to be sent with the invite
+ *  @param onViewController UIViewController to use to show needed views
+ *  @param successCallback  has to be called when invite friends was successful
+ *  @param cancelCallback    has to be called when the user aborted
+ *  @param errorCallback    when there was an error sending the invite
  */
--(void) inviteFriendsWithSubject:(NSString*) subject text:(NSString*) text referralDataUrl:(NSString*) referralDataUrl image:(UIImage*) image success:(GetSocialInviteSuccessCallback) successCallback cancel:(GetSocialCancelCallback) cancelCallback error:(GetSocialErrorCallback) errorCallback;
+- (void)inviteFriendsWithSubject:(NSString *)subject
+                            text:(NSString *)text
+                 referralDataUrl:(NSString *)referralDataUrl
+                           image:(UIImage *)image
+                onViewController:(UIViewController *)onViewController
+                         success:(GetSocialInviteSuccessCallback)successCallback
+                          cancel:(GetSocialCancelCallback)cancelCallback
+                           error:(GetSocialErrorCallback)errorCallback;
 
 @end
