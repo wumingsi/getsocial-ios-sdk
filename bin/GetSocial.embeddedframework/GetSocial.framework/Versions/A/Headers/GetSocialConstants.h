@@ -10,29 +10,17 @@
 #define GetSocialSDK_GetSocialConstants_h
 
 /** Constants for the Invite friends listener  */
-typedef NS_ENUM(NSInteger,GetSocialInviteFriendsStatus) {
+typedef NS_ENUM(NSInteger, GetSocialInviteFriendsStatus)
+{
     /**Invite is sent */
-    GetSocialInviteFriendsStatusSent         = 1,
+    GetSocialInviteFriendsStatusSent = 1,
     /**Invite is created but there is no information if it is sent  */
-    GetSocialInviteFriendsStatusIntent       = 2,
-};
-
-/** Constants for the supported Views that can be directly opened in Social Bar  */
-typedef NS_ENUM(NSInteger,GetSocialViewType) {
-    /** Current View */
-    GetSocialViewTypeCurrentView     = 1,
-    /** Activities */
-    GetSocialViewTypeActivities      = 2,
-    /** Chat */
-    GetSocialViewTypeChat            = 3,
-    /** Notifications */
-    GetSocialViewTypeNotifications   = 6,
-    /** Smart Invites */
-    GetSocialViewTypeSmartInvite     = 8
+    GetSocialInviteFriendsStatusIntent = 2,
 };
 
 /** Constants for the Leaderboard score types  */
-typedef NS_ENUM(NSInteger, GetSocialLeaderboardScoreType) {
+typedef NS_ENUM(NSInteger, GetSocialLeaderboardScoreType)
+{
     /** Contains the scores of all the users */
     GetSocialLeaderboardScoreTypeWorld = 1,
     /** Contains the scores of the users that you follow */
@@ -42,7 +30,8 @@ typedef NS_ENUM(NSInteger, GetSocialLeaderboardScoreType) {
 };
 
 /** Constants for the Leaderboard score direction  */
-typedef NS_ENUM(NSInteger, GetSocialLeaderboardDirectionType) {
+typedef NS_ENUM(NSInteger, GetSocialLeaderboardDirectionType)
+{
     /** The type is ASC */
     GetSocialLeaderboardDirectionTypeASC = 1,
     /** The type is DESC */
@@ -50,7 +39,8 @@ typedef NS_ENUM(NSInteger, GetSocialLeaderboardDirectionType) {
 };
 
 /** Constants for the User Generated Content  */
-typedef NS_ENUM(NSInteger, GetSocialUserGeneratedContentType) {
+typedef NS_ENUM(NSInteger, GetSocialUserGeneratedContentType)
+{
     /** Activity */
     GetSocialUserGeneratedContentTypeActivity = 1,
     /** Activity comment */
@@ -63,7 +53,7 @@ typedef NS_ENUM(NSInteger, GetSocialUserGeneratedContentType) {
     GetSocialUserGeneratedContentTypePublicChatMessage = 5
 };
 
-typedef NSString* GetSocialProvider;
+typedef NSString *GetSocialProvider;
 
 /**
  * The typedef defines the signature of a block that is called when an operation completes.
@@ -74,51 +64,70 @@ typedef void (^GetSocialCompleteCallback)();
  * The typedef defines the signature of a block that is called when an operation fails.
  * @param error is the error that caused the failure.
  */
-typedef void (^GetSocialErrorCallback)(NSError* error);
+typedef void (^GetSocialErrorCallback)(NSError *error);
 
-/** Constants that define the open/close animation  */
-typedef NS_ENUM(NSInteger,GetSocialAnimationStyle) {
-    /** Animation scales the element In and Out*/
-    GetSocialAnimationStyleScale        = 1,
-    /** Animation fades the element In and Out*/
-    GetSocialAnimationStyleFade         = 2,
-    /** Animation fades and scales the element In and Out*/
+/** Constants that define the open/close animation */
+typedef NS_ENUM(NSInteger, GetSocialAnimationStyle)
+{
+    /** Animation scales the element In and Out */
+    GetSocialAnimationStyleScale = 1,
+    /** Animation fades the element In and Out */
+    GetSocialAnimationStyleFade = 2,
+    /** Animation fades and scales the element In and Out */
     GetSocialAnimationStyleFadeAndScale = 3
 };
 
-/** Constants that define the scaling of the content of the GetSocial UI */
-typedef NS_ENUM(NSInteger,GetSocialScaleMode) {
-    /**The GetSocial UI, fonts and margins don't scale based on the Social Bar width */
-    GetSocialScaleModePixelPerfect           = 1,
-    /**The GetSocial UI, fonts and margins scale based on the Social Bar width */
-    GetSocialScaleModeFixedRatio             = 2
+/** Constants that define the source of the event */
+typedef NS_ENUM(NSInteger, GetSocialSourceView)
+{
+    /** Notifications View */
+    GetSocialSourceViewNotifications = 1,
+    /** Chat List View */
+    GetSocialSourceViewChatList = 2,
+    /** Chat View */
+    GetSocialSourceViewChat = 3,
+    /** Chat Room View */
+    GetSocialSourceViewChatRoom = 4,
+    /** Activities View */
+    GetSocialSourceViewActivities = 5,
+    /** Comments View */
+    GetSocialSourceViewComments = 6,
+    /** List of Likes View */
+    GetSocialSourceViewLikeList = 7,
+    /** Following List of Users View */
+    GetSocialSourceViewFollowingList = 8
 };
 
-#define kGetSocialUserID @"userId"
-#define kGetSocialProvider @"providerId"
+extern NSString *const kGetSocialScaleModeScaleWithScreenSize;
+extern NSString *const kGetSocialScaleModeConstantPhysicalSize;
 
-#define kGetSocialConversationID @"conversationId"
-#define kGetSocialRoomName @"roomName"
+extern NSString *const kGetSocialProviderFacebook;
+extern NSString *const kGetSocialProviderGooglePlus;
+extern NSString *const kGetSocialProviderGeneric;
+extern NSString *const kGetSocialProviderEmail;
+extern NSString *const kGetSocialProviderSMS;
+extern NSString *const kGetSocialProviderLink;
+extern NSString *const kGetSocialProviderTwitter;
+extern NSString *const kGetSocialProviderKik;
+extern NSString *const kGetSocialProviderKakao;
+extern NSString *const kGetSocialProviderWhatsapp;
 
-#define kGetSocialInviteImage @"inviteImage"
-#define kGetSocialInviteText @"inviteText"
-#define kGetSocialInviteSubject @"inviteSubject"
-#define kGetSocialInviteReferralData @"inviteReferralData"
+extern NSString *const kGetSocialImage;
+extern NSString *const kGetSocialText;
+extern NSString *const kGetSocialSubject;
+extern NSString *const kGetSocialReferralData;
 
-#define kGetSocialActivityTags @"tags"
-#define kGetSocialActivityGroup @"group"
+#define kGetSocialAuthPermissionsFacebook @[ @"email", @"user_friends" ]
 
-#define kGetSocialActivityID @"activityId"
-#define kGetSocialTitle @"title"
+extern NSString *const kGetSocialAppInviteUrlPlaceholder;
+extern NSString *const kGetSocialAppNamePlaceholder;
+extern NSString *const kGetSocialAppIconUrlPlaceholder;
+extern NSString *const kGetSocialAppPackageNamePlaceholder;
+extern NSString *const kGetSocialUserDisplayNamePlaceholder;
 
-#define kGetSocialAuthInfoKeyToken @"token"
-#define kGetSocialAuthInfoKeyUserId @"user_id"
-#define kGetSocialAuthInfoKeyDisplayName @"display_name"
-#define kGetSocialAuthInfoKeyAvatar @"avatar"
-#define kGetSocialAuthInfoKeyExternalUserId @"external_user_id"
-#define kGetSocialAuthPermissionsFacebook @[@"email", @"user_friends"]
+extern NSString *const GetSocialViewOpenNotification;
+extern NSString *const GetSocialViewCloseNotification;
 
-extern NSString * const GetSocialViewOpenNotification;
-extern NSString * const GetSocialViewCloseNotification;
+extern NSString *const GetSocialUserIdentityUpdatedNotification;
 
 #endif
