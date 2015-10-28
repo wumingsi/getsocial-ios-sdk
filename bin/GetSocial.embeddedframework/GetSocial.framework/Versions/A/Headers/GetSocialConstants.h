@@ -69,6 +69,8 @@ typedef void (^GetSocialErrorCallback)(NSError *error);
 /** Constants that define the open/close animation */
 typedef NS_ENUM(NSInteger, GetSocialAnimationStyle)
 {
+    /** No Animation */
+    GetSocialAnimationStyleNone = 0,
     /** Animation scales the element In and Out */
     GetSocialAnimationStyleScale = 1,
     /** Animation fades the element In and Out */
