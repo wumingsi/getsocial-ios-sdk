@@ -71,7 +71,6 @@ struct GetSocialConfigurationPropertyStruct {
     __unsafe_unretained NSString *const ACTIVITY_ACTION_BUTTON_TEXT_STYLE; // text style
     __unsafe_unretained NSString *const ACTIVITY_ACTION_BUTTON_TEXT_Y_OFFSET_NORMAL; // dimension
     __unsafe_unretained NSString *const ACTIVITY_ACTION_BUTTON_TEXT_Y_OFFSET_PRESSED; // dimension
-    __unsafe_unretained NSString *const ACTIVITY_ACTION_BUTTON_BAR_COLOR; // color
     __unsafe_unretained NSString *const ACTIVITY_ACTION_BUTTON_BG_IMAGE_NORMAL; // drawable
     __unsafe_unretained NSString *const ACTIVITY_ACTION_BUTTON_BG_IMAGE_PRESSED; // drawable
     __unsafe_unretained NSString *const ACTIVITY_ACTION_BUTTON_BG_IMAGE_NORMAL_INSETS; // insets
