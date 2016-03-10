@@ -16,11 +16,12 @@
         },
         "header": {
             "height": 38,
-            "bg-color": "0xFF2A3B45"
+            "bg-color": "0xFF2A3B45",
+            "padding-top": 2,
+            "padding-bottom": 0
         },
         "title": {
             "text-style": "header",
-            "margin-top": 0
         },
         "back-button": {
             "width": 33,
@@ -122,6 +123,9 @@
             "bg-color": "0xFFCFD3D9",
             "height": 1
         },
+        "activity-comment": {
+            "bg-color": "0x0F000000"
+        },
         "load-more-button": {
             "text-style": "call-to-action",
             "text-y-offset-normal": 0,
@@ -207,6 +211,14 @@
         "chat-tooltip": {
             "text-style": "their-chat-content",
             "bg-image": "chat-tooltip.bg-image.png"
+        },
+        "presence-online": {
+            "text-style": "presence-online",
+            "bg-image": "presence-online.bg-image.png"
+        },
+        "presence-offline": {
+            "text-style": "presence-offline",
+            "bg-image": "presence-offline.bg-image.png"
         }
     },
     "text-styles": {
@@ -279,6 +291,16 @@
             "font": "HelveticaNeue",
             "font-size": 16,
             "font-color": "0xFF797E85"
+        },
+        "presence-online": {
+            "font": "HelveticaNeue",
+            "font-size": 12,
+            "font-color": "0xFF9EA6B2"
+        },
+        "presence-offline": {
+            "font": "HelveticaNeue",
+            "font-size": 12,
+            "font-color": "0xFF9EA6B2"
         }
     }
 }

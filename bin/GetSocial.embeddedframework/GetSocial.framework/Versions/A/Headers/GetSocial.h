@@ -1,25 +1,44 @@
-//
-//  GetSocial.h
-//  GetSocialSDK
-//
-//  Created by Demian Denker on 01/10/13.
-//  Copyright (c) 2015 GetSocial. All rights reserved.
-//
+/*
+ *    	Copyright 2015-2016 GetSocial B.V.
+ *
+ *	Licensed under the Apache License, Version 2.0 (the "License");
+ *	you may not use this file except in compliance with the License.
+ *	You may obtain a copy of the License at
+ *
+ *    	http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *	Unless required by applicable law or agreed to in writing, software
+ *	distributed under the License is distributed on an "AS IS" BASIS,
+ *	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *	See the License for the specific language governing permissions and
+ *	limitations under the License.
+ */
 
-#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
+// GetSocial SDK Constants
 #import "GetSocialConstants.h"
-#import "GetSocialUserIdentity.h"
-#import "GetSocialInvitePlugin.h"
-#import "GetSocialConfigurationProperties.h"
+
+// UI Configuration
 #import "GetSocialConfiguration.h"
-#import "GetSocialLeaderboard.h"
+#import "GetSocialConfigurationProperties.h"
+
+// View Builders
 #import "GetSocialActivitiesViewBuilder.h"
 #import "GetSocialNotificationsViewBuilder.h"
 #import "GetSocialSmartInviteViewBuilder.h"
 #import "GetSocialUserListViewBuilder.h"
-#import "GetSocialIdentityInfo.h"
+
+// Smart Invite Base Plugin
+#import "GetSocialInvitePlugin.h"
+
+// User Management
+#import "GetSocialCurrentUser.h"
+#import "GetSocialUserIdentity.h"
+
+// Leaderboards
+#import "GetSocialLeaderboard.h"
 
 /**
  *  The GetSocial Singleton provides the main entry point for all the social features in the Core module
@@ -45,19 +64,9 @@
 @property(nonatomic, strong) NSString *language;
 
 /**
- *  Gets Current logged in User
+ *  Gets the GetSocialCurrentUser instance
  */
-@property(nonatomic, strong) GetSocialUserIdentity *loggedInUser;
-
-/**
- *  Gets app initialization status
- */
-@property(nonatomic, readonly) BOOL isInitialized;
-
-/**
- *  Gets user login status
- */
-@property(nonatomic, readonly) BOOL isUserLoggedIn;
+@property(nonatomic, strong, readonly) GetSocialCurrentUser *currentUser;
 
 /**
  *  Gets GetSocialConfiguration instance to change SDK configuration
@@ -70,9 +79,9 @@
 @property(nonatomic, readonly) NSString *sdkVersion;
 
 /**
- *  Gets number of unread notifications
+ *  Gets if the GetSocial SDK was already initialized
  */
-@property(nonatomic, readonly) NSInteger unreadNotificationsCount;
+@property(nonatomic, readonly) BOOL isInitialized;
 
 #pragma mark - App Initialization
 /** @name App Initialization */
@@ -97,83 +106,6 @@
  */
 - (void)registerPlugin:(GetSocialPlugin *)plugin provider:(GetSocialProvider)provider;
 
-#pragma mark - User Authentication
-/** @name User Authentication */
-
-/**
- *  Logs in a user with a specific provider.
- *
- *  @param identityInfo An instance of GetSocialIdentityInfo created with the parameters required by the specific provider.
- *                      See the specifications of the specific provider what kind of key/value pairs the provider expected
- *  @param success      Block called when the user is succesfully logged in. The user's details can be accessed through the loggedInUser property,
- *                      which is guranteed to be frozen until success returns
- *  @param failure      Block called when the login failed
- */
-- (void)loginWithInfo:(GetSocialIdentityInfo *)identityInfo success:(void (^)())success failure:(void (^)(NSError *err))failure;
-
-/**
- *  Logs out the current user.
- *
- *  @param complete Block called when the operation completed
- */
-- (void)logoutWithComplete:(void (^)())complete;
-
-/**
- *  Adds Social User Identity Info for the specified provider.
- *
- *  @param identityInfo An instance of GetSocialIdentityInfo created with the parameters required by the specific provider.
- *                      See the specifications of the specific provider what kind of key/value pairs the provider expected
- *  @param success      Block called when identityInfo was successfully added
- *  @param failure      Block called when identityInfo was not added
- */
-- (void)addUserIdentityInfo:(GetSocialIdentityInfo *)identityInfo success:(void (^)())success failure:(void (^)(NSError *err))failure;
-
-/**
- *  Removes Social User Identity Info for the specified provider.
- *
- *  @param provider The name of the provider
- *  @param success  Block called when identityInfo was successfully removed
- *  @param failure  Block called when identityInfo was not removed
- */
-- (void)removeUserIdentityInfoForProvider:(GetSocialProvider)provider success:(void (^)())success failure:(void (^)(NSError *err))failure;
-
-/**
- *  Gets external Id for the current logged in user
- *
- *  @param provider The name of the provider
- *  @param success  Block called with the external id of the user
- *  @param failure  Block called when request fails
- */
-- (void)externalId:(GetSocialProvider)provider success:(void (^)(NSString *externalId))success failure:(void (^)(NSError *error))failure;
-
-/**
- *  Gets external Id for a specific GetSocial User Id
- *
- *  @param getSocialUserId Id of the GetSocial User
- *  @param provider        The name of the provider
- *  @param success         Block called with the external id of the user
- *  @param failure         Block called when request fails
- */
-- (void)externalIdForGetSocialUserId:(NSString *)getSocialUserId
-                            provider:(GetSocialProvider)provider
-                             success:(void (^)(NSString *externalId))success
-                             failure:(void (^)(NSError *error))failure;
-
-/**
- *  Registers a block to override GetSocial's Login. Any interaction that requires a logged in user anywhere in the SDK will call this block
- *
- *  @param onLoginRequestHandler Block to be executed to login a user
- */
-- (void)setOnLoginRequestHandler:(void (^)())onLoginRequestHandler;
-
-/**
- *  Registers a block that will be called everytime there is an update on the User Identity including login, logout and adding and removing
- *identities.
- *
- *  @param onUserIdentityUpdatedHandler Block to be executed after User Identity is updated
- */
-- (void)setOnUserIdentityUpdatedHandler:(void (^)(GetSocialUserIdentity *userIdentity))onUserIdentityUpdatedHandler;
-
 #pragma mark - Global Handlers
 /** @name Custom Handlers */
 
@@ -187,7 +119,7 @@
  *                                  Return YES if action was handled by the app.
  *                                  Return NO for default GetSocial behaviour
  */
-- (void)setOnUserAvatarClickHandler:(BOOL (^)(GetSocialUserIdentity *user, GetSocialSourceView source))onUserAvatarClickHandler;
+- (void)setOnUserAvatarClickHandler:(BOOL (^)(GetSocialUser *user, GetSocialSourceView source))onUserAvatarClickHandler;
 
 /**
  *  Registers a block to be executed when clicking on the app avatar.
@@ -201,12 +133,22 @@
 - (void)setOnAppAvatarClickHandler:(BOOL (^)())onAppAvatarClickHandler;
 
 /**
+ *  Registers a block to be executed when specific actions (GetSocialAction) are being done in the SDK
+ *
+ *  @param onActionPerformHandler Block to be executed when an action is being done.
+ *                                The finalize block needs to be called always with either YES to continue performing the action
+ *                                or NO if action needs to be cancelled.
+ */
+- (void)setOnActionPerformHandler:(void (^)(GetSocialAction action, void (^finalize)(BOOL shouldPerformAction)))onActionPerformHandler;
+
+/**
  *  Registers a block to handle user generated content. This block is executed when a user sends any type of content through activities or chat.
+ *  See GetSocialContentSource
  *
  *  @param onUserGeneratedContentHandler Block to be executed when the content is ready to be send.
  *                                       Return the approved content to send or nil if the content shouldn't be send.
  */
-- (void)setOnUserGeneratedContentHandler:(NSString * (^)(GetSocialUserGeneratedContentType type, NSString *content))onUserGeneratedContentHandler;
+- (void)setOnUserGeneratedContentHandler:(NSString * (^)(GetSocialContentSource source, NSString *content))onUserGeneratedContentHandler;
 
 #pragma mark - Activities
 /** @name Activities */
@@ -258,13 +200,6 @@
              failure:(void (^)(NSError *error))failure;
 
 /**
- *  Takes a screenshot that can be posted later.
- *
- *  @return An UIImage with the screenshot
- */
-- (UIImage *)takeScreenshot;
-
-/**
  *  Registers a block for handling activity action button click.
  *  This block is executed when someone clicks on the action button within a Activity.
  *  The action is passed as an argument.
@@ -275,6 +210,11 @@
 
 #pragma mark - Notification Center
 /** @name Notification Center */
+
+/**
+ *  Gets number of unread notifications
+ */
+@property(nonatomic, readonly) NSInteger unreadNotificationsCount;
 
 /**
  *  Creates notifications view builder used to open the Notifications View.
@@ -357,7 +297,7 @@
  *
  *  @return An instance of GetSocialUserListViewBuilder
  */
-- (GetSocialUserListViewBuilder *)createUserListViewWithDismissHandler:(void (^)(GetSocialUserIdentity *user, BOOL didCancel))handler;
+- (GetSocialUserListViewBuilder *)createUserListViewWithDismissHandler:(void (^)(GetSocialUser *user, BOOL didCancel))handler;
 
 #pragma mark - Extra UI
 /** @name Extra UI */
@@ -405,20 +345,20 @@
 /**
  *  Requests leaderboard by identifier.
  *
- *  @param leaderboardID Identifier of the leaderboard
+ *  @param leaderboardId Identifier of the leaderboard
  *  @param success       Block called with the leaderboard object when the leaderboard is retrieved successfully
  *  @param failure       Block called when requesting the leaderboard failed
  */
-- (void)leaderboard:(NSString *)leaderboardID success:(void (^)(GetSocialLeaderboard *leaderboard))success failure:(void (^)(NSError *error))failure;
+- (void)leaderboard:(NSString *)leaderboardId success:(void (^)(GetSocialLeaderboard *leaderboard))success failure:(void (^)(NSError *error))failure;
 
 /**
  *  Requests leaderboards by array of identifiers.
  *
- *  @param leaderboardIDs An array of identifiers of the leaderboard
+ *  @param leaderboardIds An array of identifiers of the leaderboard
  *  @param success        Block called with an array of leaderboards when the leaderboards are retrieved successfully
  *  @param failure        Block called when requesting the leaderboards failed
  */
-- (void)leaderboards:(NSArray *)leaderboardIDs success:(void (^)(NSArray *leaderboards))success failure:(void (^)(NSError *error))failure;
+- (void)leaderboards:(NSArray *)leaderboardIds success:(void (^)(NSArray *leaderboards))success failure:(void (^)(NSError *error))failure;
 
 /**
  *  Requests leaderboards page by page.
@@ -436,14 +376,14 @@
 /**
  *  Requests scores page by page.
  *
- *  @param leaderboardID Identifier of the leaderboard
+ *  @param leaderboardId Identifier of the leaderboard
  *  @param offset        Offset from which scores will be retrieved
  *  @param count         Count of the scores. Could be less than expected if there are less scores
  *  @param scoreType     Type of score to retrieve, check enum GetSocialLeaderboardScoreType
  *  @param success       Block called with an array of scores when the scores are retrieved successfully
  *  @param failure       Block called when fetching the scores failed
  */
-- (void)leaderboardScores:(NSString *)leaderboardID
+- (void)leaderboardScores:(NSString *)leaderboardId
                    offset:(NSInteger)offset
                     count:(NSInteger)count
                 scoreType:(GetSocialLeaderboardScoreType)scoreType
@@ -454,12 +394,12 @@
  *  Submits the score to a specific leaderboard.
  *
  *  @param score         Score to be submitted
- *  @param leaderboardID Identifier of the leaderboard
+ *  @param leaderboardId Identifier of the leaderboard
  *  @param success       Block called with a current position in the leaderboard
  *  @param failure       Block called when submitting the score failed
  */
 - (void)submitLeaderboardScore:(NSInteger)score
-              forLeaderboardID:(NSString *)leaderboardID
+              forLeaderboardId:(NSString *)leaderboardId
                        success:(void (^)(NSInteger position))success
                        failure:(void (^)(NSError *error))failure;
 

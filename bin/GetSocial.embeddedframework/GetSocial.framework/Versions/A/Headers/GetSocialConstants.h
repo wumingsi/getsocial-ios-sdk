@@ -1,17 +1,24 @@
-//
-//  GetSocialConstants.h
-//  GetSocialSDK
-//
-//  Created by Demian Denker on 03/10/13.
-//  Copyright (c) 2013 GetSocial. All rights reserved.
-//
+/*
+ *    	Copyright 2015-2016 GetSocial B.V.
+ *
+ *	Licensed under the Apache License, Version 2.0 (the "License");
+ *	you may not use this file except in compliance with the License.
+ *	You may obtain a copy of the License at
+ *
+ *    	http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *	Unless required by applicable law or agreed to in writing, software
+ *	distributed under the License is distributed on an "AS IS" BASIS,
+ *	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *	See the License for the specific language governing permissions and
+ *	limitations under the License.
+ */
 
 #ifndef GetSocialSDK_GetSocialConstants_h
 #define GetSocialSDK_GetSocialConstants_h
 
 /** Constants for the Invite friends listener  */
-typedef NS_ENUM(NSInteger, GetSocialInviteFriendsStatus)
-{
+typedef NS_ENUM(NSInteger, GetSocialInviteFriendsStatus) {
     /**Invite is sent */
     GetSocialInviteFriendsStatusSent = 1,
     /**Invite is created but there is no information if it is sent  */
@@ -19,8 +26,7 @@ typedef NS_ENUM(NSInteger, GetSocialInviteFriendsStatus)
 };
 
 /** Constants for the Leaderboard score types  */
-typedef NS_ENUM(NSInteger, GetSocialLeaderboardScoreType)
-{
+typedef NS_ENUM(NSInteger, GetSocialLeaderboardScoreType) {
     /** Contains the scores of all the users */
     GetSocialLeaderboardScoreTypeWorld = 1,
     /** Contains the scores of the users that you follow */
@@ -30,45 +36,130 @@ typedef NS_ENUM(NSInteger, GetSocialLeaderboardScoreType)
 };
 
 /** Constants for the Leaderboard score direction  */
-typedef NS_ENUM(NSInteger, GetSocialLeaderboardDirectionType)
-{
+typedef NS_ENUM(NSInteger, GetSocialLeaderboardDirectionType) {
     /** The type is ASC */
     GetSocialLeaderboardDirectionTypeASC = 1,
     /** The type is DESC */
     GetSocialLeaderboardDirectionTypeDESC = 2
 };
 
-/** Constants for the User Generated Content  */
-typedef NS_ENUM(NSInteger, GetSocialUserGeneratedContentType)
-{
+/** Constants for the GetSocial Actions  */
+typedef NS_ENUM(NSInteger, GetSocialAction) {
+    /** Open Activities */
+    GetSocialActionOpenActivities = 1,
+    /** Open Activity */
+    GetSocialActionOpenActivityDetails = 2,
+    /** Post Activity */
+    GetSocialActionPostActivity = 3,
+    /** Post comment */
+    GetSocialActionPostComment = 4,
+    /** Like Activity */
+    GetSocialActionLikeActivity = 5,
+    /** Like comment */
+    GetSocialActionLikeComment = 6,
+    /** Open Chat List */
+    GetSocialActionOpenChatList = 7,
+    /** Open Private Chat */
+    GetSocialActionOpenPrivateChat = 8,
+    /** Send Private Chat message */
+    GetSocialActionSendPrivateChatMessage = 9,
+    /** Open Public Chat */
+    GetSocialActionOpenPublicChat = 10,
+    /** Send Public Chat message */
+    GetSocialActionSendPublicChatMessage = 11,
+    /** Open Notifications */
+    GetSocialActionOpenNotifications = 12,
+    /** Open Friends List */
+    GetSocialActionOpenFriendsList = 13
+};
+
+/** Constants for the User Generated Content Source  */
+typedef NS_ENUM(NSInteger, GetSocialContentSource) {
     /** Activity */
-    GetSocialUserGeneratedContentTypeActivity = 1,
+    GetSocialContentSourceActivity = 1,
     /** Activity comment */
-    GetSocialUserGeneratedContentTypeComment = 2,
-    /** Private Chat message */
-    GetSocialUserGeneratedContentTypePrivateChatMessage = 3,
-    /** Open room chat message */
-    GetSocialUserGeneratedContentTypeGroupChatMessage = 4,
-    /** Open room chat message */
-    GetSocialUserGeneratedContentTypePublicChatMessage = 5
+    GetSocialContentSourceComment = 2,
+    /** Private chat message */
+    GetSocialContentSourcePrivateChatMessage = 3,
+    /** Public chat message */
+    GetSocialContentSourcePublicChatMessage = 4
 };
 
 typedef NSString *GetSocialProvider;
 
 /**
- * The typedef defines the signature of a block that is called when an operation completes.
+ * The typedef defines the signature of a block that is called when an operation
+ * completes.
  */
 typedef void (^GetSocialCompleteCallback)();
 
 /**
- * The typedef defines the signature of a block that is called when an operation fails.
+ * The typedef defines the signature of a block that is called when an operation
+ * completes.
+ */
+typedef void (^GetSocialSuccessCallback)();
+
+/**
+ * The typedef defines the signature of a block that is called when an operation
+ * fails.
  * @param error is the error that caused the failure.
  */
 typedef void (^GetSocialErrorCallback)(NSError *error);
 
+/**
+ *  Constants for the different User Identity conflict resolution strategies
+ */
+typedef NS_ENUM(NSUInteger, GetSocialAddIdentityConflictResolutionStrategy) {
+    /**
+     *  Current user is kept and the new identity won't be added since it already belongs to the remote user
+     */
+    GetSocialAddIdentityConflictResolutionStrategyCurrent = 1,
+    /**
+     *  Current user is replaced with remote user
+     */
+    GetSocialAddIdentityConflictResolutionStrategyRemote = 2
+};
+
+/**
+ *  Constants for the different User Identity conflict resolution strategies
+ */
+typedef NS_ENUM(NSUInteger, GetSocialAddIdentityResult) {
+    /**
+     *  Identity was successfully added without a conflict
+     */
+    GetSocialAddIdentityResultIdentityAdded = 1,
+    /**
+     *  Current user is kept and the new identity won't be added since it already belongs to the remote user
+     */
+    GetSocialAddIdentityResultConflictResolvedWithCurrent = 2,
+    /**
+     *  Current user is replaced with remote user
+     */
+    GetSocialAddIdentityResultConflictResolvedWithRemote = 3
+};
+
+/**
+ * The typedef defines the signature of a block that is called when an operation
+ * completes.
+ */
+typedef void (^GetSocialUserIdentityCompleteCallback)(GetSocialAddIdentityResult result);
+
+/**
+ *  The typedef defines the signature of a block that should be called to resolve a conflict while adding an identity to an user.
+ *
+ *  @param strategy Strategy (GetSocialAddIdentityConflictResolutionStrategy) to use to solve the conflict
+ */
+typedef void (^GetSocialUserIdentityResolveConflictCallback)(GetSocialAddIdentityConflictResolutionStrategy strategy);
+
+/**
+ *  The typedef defines the signature of a block that should be called to decide if a specific user action should be performed
+ *
+ *  @param shouldPerformAction YES to perform the user action. NO to ignore it.
+ */
+typedef void (^GetSocialFinalizeActionCallback)(BOOL shouldPerformAction);
+
 /** Constants that define the open/close animation */
-typedef NS_ENUM(NSInteger, GetSocialAnimationStyle)
-{
+typedef NS_ENUM(NSInteger, GetSocialAnimationStyle) {
     /** No Animation */
     GetSocialAnimationStyleNone = 0,
     /** Animation scales the element In and Out */
@@ -80,8 +171,7 @@ typedef NS_ENUM(NSInteger, GetSocialAnimationStyle)
 };
 
 /** Constants that define the source of the event */
-typedef NS_ENUM(NSInteger, GetSocialSourceView)
-{
+typedef NS_ENUM(NSInteger, GetSocialSourceView) {
     /** Notifications View */
     GetSocialSourceViewNotifications = 1,
     /** Chat List View */
