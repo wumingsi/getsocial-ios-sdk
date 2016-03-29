@@ -70,7 +70,9 @@ typedef NS_ENUM(NSInteger, GetSocialAction) {
     /** Open Notifications */
     GetSocialActionOpenNotifications = 12,
     /** Open Friends List */
-    GetSocialActionOpenFriendsList = 13
+    GetSocialActionOpenFriendsList = 13,
+    /** Open Smart Invites */
+    GetSocialActionOpenSmartInvites = 14
 };
 
 /** Constants for the User Generated Content Source  */
@@ -193,6 +195,7 @@ typedef NS_ENUM(NSInteger, GetSocialSourceView) {
 extern NSString *const kGetSocialScaleModeScaleWithScreenSize;
 extern NSString *const kGetSocialScaleModeConstantPhysicalSize;
 
+extern NSString *const kGetSocialProviderFacebookMessenger;
 extern NSString *const kGetSocialProviderFacebook;
 extern NSString *const kGetSocialProviderGooglePlus;
 extern NSString *const kGetSocialProviderGeneric;

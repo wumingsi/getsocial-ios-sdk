@@ -319,6 +319,13 @@
  */
 - (void)restoreView;
 
+/**
+ *  Registers a block for handling the different states of the GetSocial Windows
+ *
+ *  @param onWindowStateChangedHandler Block called when a GetSocial Window is opened or closed
+ */
+- (void)setOnWindowStateChangedHandler:(void (^)(BOOL isOpen))onWindowStateChangedHandler;
+
 #pragma mark - Cloud Save
 /** @name Cloud Save */
 
