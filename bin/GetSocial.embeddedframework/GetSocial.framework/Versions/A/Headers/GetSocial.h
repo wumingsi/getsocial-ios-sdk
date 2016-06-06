@@ -230,6 +230,15 @@
  */
 - (void)setOnNotificationsChangeHandler:(void (^)(NSInteger unreadNotificationsCount))onNotificationsChangeHandler;
 
+/**
+ *  Registers the device to receive Push Notifications.
+ *  It allows to initiate the PN registration process at any time during your app lifecycle.
+ *  Take in mind that calling this method will ask for user permission if the user didn't grant them before.
+ *
+ *  You don't need to call this method if you already handle Push Notifications registration in your app.
+ */
+- (void)registerForPushNotifications;
+
 #pragma mark - Smart Invites
 /** @name Smart Invites */
 
