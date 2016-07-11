@@ -83,6 +83,12 @@
  */
 @property(nonatomic, readonly) BOOL isInitialized;
 
+
+/**
+ *  Sets/Gets auto registration for PushNotifications. The default value is NO
+ */
+@property(nonatomic, assign) BOOL disableAutoRegistrationForPushNotifications;
+
 #pragma mark - App Initialization
 /** @name App Initialization */
 
