@@ -17,3 +17,4 @@
 #import "Constants.h"
 
 NSString *const UserWasUpdatedNotification = @"UserWasUpdatedNotification";
+NSString *const GetSocialWasInitializedNotification = @"GetSocialWasInitializedNotification";

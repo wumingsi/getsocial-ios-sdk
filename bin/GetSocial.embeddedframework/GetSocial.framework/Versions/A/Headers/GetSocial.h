@@ -83,7 +83,6 @@
  */
 @property(nonatomic, readonly) BOOL isInitialized;
 
-
 /**
  *  Sets/Gets auto registration for PushNotifications. The default value is NO
  */
@@ -95,11 +94,11 @@
 /**
  *  Initializes the GetSocial SDK.
  *
- *  @param key     App Key as shown on the Developer Portal
+ *  @param key     App Key as shown on the GetSocial Dashboard
  *  @param success Block to be executed after the app is succesfully initialized
  *  @param failure Block to be executed if the app was not succesfully initialized
  */
-- (void)initWithKey:(NSString *)key success:(void (^)())success failure:(void (^)(NSError *error))failure;
+- (void)initWithKey:(NSString *)key success:(GetSocialSuccessCallback)success failure:(GetSocialFailureCallback)failure;
 
 #pragma mark - Plugin Registration
 /** @name Plugin Registration */
@@ -108,7 +107,7 @@
  *  Registers a new instance of a plugin for a specified provider.
  *
  *  @param plugin   an instance of a plugin implementation
- *  @param provider Id of the provider for the plugin implementation
+ *  @param provider Id of the provider for the plugin implementation, will be lowercased
  */
 - (void)registerPlugin:(GetSocialPlugin *)plugin provider:(GetSocialProvider)provider;
 
@@ -202,8 +201,8 @@
           buttonText:(NSString *)buttonText
               action:(NSString *)action
              andTags:(NSArray *)tags
-             success:(void (^)())success
-             failure:(void (^)(NSError *error))failure;
+             success:(GetSocialSuccessCallback)success
+             failure:(GetSocialFailureCallback)failure;
 
 /**
  *  Registers a block for handling activity action button click.
@@ -274,7 +273,7 @@
 /**
  *  Invites friends through a specific invite provider
  *
- *  @param provider   The provider through which the invite will be sent.
+ *  @param provider   The provider through which the invite will be sent, will be lowercased
  *  @param properties Dictionary that provides information about the smart invite to send
  *
  *  Supported Properties:
@@ -351,7 +350,7 @@
  *  @param success Block called when the state is saved successfully
  *  @param failure Block called when saving the state failed
  */
-- (void)saveState:(NSString *)state success:(void (^)())success failure:(void (^)(NSError *error))failure;
+- (void)saveState:(NSString *)state success:(GetSocialSuccessCallback)success failure:(GetSocialFailureCallback)failure;
 
 /**
  *  Gets the saved state.
@@ -359,7 +358,7 @@
  *  @param success Block called with the state string when the state is retrieved successfully
  *  @param failure Block called when requesting the state failed
  */
-- (void)savedStateWithSuccess:(void (^)(NSString *state))success failure:(void (^)(NSError *error))failure;
+- (void)savedStateWithSuccess:(void (^)(NSString *state))success failure:(GetSocialFailureCallback)failure;
 
 #pragma mark - Leaderboards
 /** @name Leaderboards */
@@ -371,7 +370,7 @@
  *  @param success       Block called with the leaderboard object when the leaderboard is retrieved successfully
  *  @param failure       Block called when requesting the leaderboard failed
  */
-- (void)leaderboard:(NSString *)leaderboardId success:(void (^)(GetSocialLeaderboard *leaderboard))success failure:(void (^)(NSError *error))failure;
+- (void)leaderboard:(NSString *)leaderboardId success:(void (^)(GetSocialLeaderboard *leaderboard))success failure:(GetSocialFailureCallback)failure;
 
 /**
  *  Requests leaderboards by array of identifiers.
@@ -380,7 +379,7 @@
  *  @param success        Block called with an array of leaderboards when the leaderboards are retrieved successfully
  *  @param failure        Block called when requesting the leaderboards failed
  */
-- (void)leaderboards:(NSArray *)leaderboardIds success:(void (^)(NSArray *leaderboards))success failure:(void (^)(NSError *error))failure;
+- (void)leaderboards:(NSArray *)leaderboardIds success:(void (^)(NSArray *leaderboards))success failure:(GetSocialFailureCallback)failure;
 
 /**
  *  Requests leaderboards page by page.
@@ -393,7 +392,7 @@
 - (void)leaderboards:(NSInteger)offset
                count:(NSInteger)count
              success:(void (^)(NSArray *leaderboards))success
-             failure:(void (^)(NSError *error))failure;
+             failure:(GetSocialFailureCallback)failure;
 
 /**
  *  Requests scores page by page.
@@ -410,7 +409,7 @@
                     count:(NSInteger)count
                 scoreType:(GetSocialLeaderboardScoreType)scoreType
                   success:(void (^)(NSArray *scores))success
-                  failure:(void (^)(NSError *error))failure;
+                  failure:(GetSocialFailureCallback)failure;
 
 /**
  *  Submits the score to a specific leaderboard.
@@ -423,6 +422,22 @@
 - (void)submitLeaderboardScore:(NSInteger)score
               forLeaderboardId:(NSString *)leaderboardId
                        success:(void (^)(NSInteger position))success
-                       failure:(void (^)(NSError *error))failure;
+                       failure:(GetSocialFailureCallback)failure;
+
+#pragma mark - Retrieve external users
+
+/**
+ *  Retrieve GetSocialUsers by provider and userId
+ *  If one of the userIds could not be retrieved, the complete operation fails.
+ *
+ *  @param provider Provider
+ *  @param userIds  Set of unique userIds to retrieve
+ *  @param success  Block called with a dictionary of users, where keys are the provided userIds
+ *  @param failure  Block called when operation failed
+ */
+- (void)usersWithProvider:(GetSocialProvider)provider
+                  userIds:(NSSet<NSString *> *)userIds
+                  success:(void (^)(NSDictionary<NSString *, GetSocialUser *> *users))success
+                  failure:(GetSocialFailureCallback)failure;
 
 @end

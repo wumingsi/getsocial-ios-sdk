@@ -25,7 +25,7 @@
 /**
 *  Creates and returns a new GetSocialUserIdentity with an userId and token
 *
-*  @param provider Id of the provider
+*  @param provider Id of the provider, will be lowercased
 *  @param userId   Id of the user for the specified provider
 *  @param token    Token of the user for the specified provider. It's a string, provided by the developer
 *                  and it will be required by the GetSocial SDK to validate any future intent to add this same
@@ -38,7 +38,7 @@
 /**
  *  Creates and returns a new GetSocialUserIdentity with a token
  *
- *  @param provider Id of the provider
+ *  @param provider Id of the provider, will be lowercased
  *  @param token    Token of the user for the specified provider
  *
  *  @return An instance of GetSocialUserIdentityInfo with the specified parameters

@@ -19,11 +19,12 @@
 #import "GetSocialUserIdentity.h"
 
 /**
- *  Describes a current user.
+ *  Describes the current user
  */
 @interface GetSocialCurrentUser : GetSocialUser
 
-#pragma mark - User details
+#pragma mark - User Details
+/** @name User Details */
 
 /**
  *  Sets a new display name for the user
@@ -33,7 +34,7 @@
  *  @param failure     Block called if display name was not updated because includes invalid characters or exceeds the max length
  */
 
-- (void)setDisplayName:(NSString *)displayName success:(GetSocialSuccessCallback)success failure:(GetSocialErrorCallback)failure;
+- (void)setDisplayName:(NSString *)displayName success:(GetSocialSuccessCallback)success failure:(GetSocialFailureCallback)failure;
 
 /**
  *  Sets a new avatar url for the user
@@ -42,9 +43,10 @@
  *  @param success   Block called if avatar url was updated
  *  @param failure   Block called if avatar url was not updated because url is not valid or not accesible
  */
-- (void)setAvatarUrl:(NSString *)avatarUrl success:(GetSocialSuccessCallback)success failure:(GetSocialErrorCallback)failure;
+- (void)setAvatarUrl:(NSString *)avatarUrl success:(GetSocialSuccessCallback)success failure:(GetSocialFailureCallback)failure;
 
 #pragma mark - User Identity
+/** @name User Identity */
 
 /**
  *  Adds an identity to the user
@@ -57,18 +59,18 @@
  */
 - (void)addUserIdentity:(GetSocialUserIdentity *)identity
                complete:(GetSocialUserIdentityCompleteCallback)complete
-                failure:(GetSocialErrorCallback)failure
+                failure:(GetSocialFailureCallback)failure
                conflict:
                    (void (^)(GetSocialUser *currentUser, GetSocialUser *remoteUser, GetSocialUserIdentityResolveConflictCallback conflict))conflict;
 
 /**
  *  Removes an identity from the user
  *
- *  @param provider Provider of the identity to be removed
+ *  @param provider Provider of the identity to be removed, will be lowercased
  *  @param success  Block called if identity was removed
  *  @param failure  Block called if identity couldn't be removed
  */
-- (void)removeUserIdentityForProvider:(GetSocialProvider)provider success:(GetSocialSuccessCallback)success failure:(GetSocialErrorCallback)failure;
+- (void)removeUserIdentityForProvider:(GetSocialProvider)provider success:(GetSocialSuccessCallback)success failure:(GetSocialFailureCallback)failure;
 
 /**
  *  Resets the current user and generates a new anonymous user.
@@ -76,6 +78,6 @@
  *  @param success Block called if user was reset
  *  @param failure Block called if operation was not completed, probably because connectivity issues
  */
-- (void)resetWithSuccess:(GetSocialSuccessCallback)success failure:(GetSocialErrorCallback)failure;
+- (void)resetWithSuccess:(GetSocialSuccessCallback)success failure:(GetSocialFailureCallback)failure;
 
 @end

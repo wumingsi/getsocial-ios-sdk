@@ -42,4 +42,14 @@
  */
 @property(nonatomic, strong) UIImage *image;
 
+/**
+ *  Sets the image with given local path to be used on the Smart Invite if provider supports it
+ *
+ *  @param path  path to image
+ *  @param error contains error if could not load image
+ *
+ *  @return YES, if image is loaded, NO, if not
+ */
+- (BOOL)setImagePath:(NSString *)path error:(NSError **)error;
+
 @end

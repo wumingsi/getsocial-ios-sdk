@@ -53,6 +53,11 @@
 @property(nonatomic, readonly) NSArray *identities;
 
 /**
+ *  The user's current presence.
+ */
+@property(nonatomic, readonly) GetSocialUserPresence presence;
+
+/**
  *  Returns if the user has an identity for the specified provider
  *
  *  @param provider Id of the provider
