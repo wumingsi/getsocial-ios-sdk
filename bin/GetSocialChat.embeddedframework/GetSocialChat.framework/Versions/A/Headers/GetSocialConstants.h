@@ -23,6 +23,11 @@ typedef NS_ENUM(NSInteger, GetSocialInviteFriendsStatus) {
     GetSocialInviteFriendsStatusSent = 1,
     /**Invite is created but there is no information if it is sent  */
     GetSocialInviteFriendsStatusIntent = 2,
+    /**Invite was cancelled  */
+    GetSocialInviteFriendsStatusCancelled = 3,
+    /**Invite couldn't be sent because an error with the provider  */
+    GetSocialInviteFriendsStatusError = 4
+
 };
 
 /** Constants for the Leaderboard score types  */
