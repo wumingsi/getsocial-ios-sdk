@@ -21,7 +21,7 @@
             "padding-bottom": 0
         },
         "title": {
-            "text-style": "header",
+            "text-style": "header"
         },
         "back-button": {
             "width": 33,
