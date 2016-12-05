@@ -92,6 +92,14 @@ typedef NS_ENUM(NSInteger, GetSocialContentSource) {
     GetSocialContentSourcePublicChatMessage = 4
 };
 
+/** Constants for UserListView type  */
+typedef NS_ENUM(NSInteger, GetSocialUserListType) {
+    /**List with all following users */
+    GetSocialUserListFollowingType = 1,
+    /**List with all followers  */
+    GetSocialUserListFollowersType = 2
+};
+
 typedef NSString *GetSocialProvider;
 
 /**

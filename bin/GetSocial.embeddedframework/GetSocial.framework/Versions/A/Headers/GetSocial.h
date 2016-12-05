@@ -79,6 +79,11 @@
 @property(nonatomic, readonly) NSString *sdkVersion;
 
 /**
+ *  Gets Version of the GetSocial API
+ */
+@property(nonatomic, readonly) NSString *apiVersion;
+
+/**
  *  Gets if the GetSocial SDK was already initialized
  */
 @property(nonatomic, readonly) BOOL isInitialized;
@@ -311,7 +316,17 @@
  *
  *  @return An instance of GetSocialUserListViewBuilder
  */
-- (GetSocialUserListViewBuilder *)createUserListViewWithDismissHandler:(void (^)(GetSocialUser *user, BOOL didCancel))handler;
+- (GetSocialUserListViewBuilder *)createUserListViewWithDismissHandler:(void (^)(GetSocialUser *user, BOOL didCancel))handler __attribute__((deprecated("Please use `createUserListViewWithType:andDismissHandler` instead.")));
+
+/**
+ *  Creates user list view builder used to open the User List.
+ *
+ *  @param type Type of the list to be shown
+ *  @param handler Block to be called when User List is closed or an User was selected
+ *
+ *  @return An instance of GetSocialUserListViewBuilder
+ */
+- (GetSocialUserListViewBuilder *)createUserListViewWithType:(GetSocialUserListType)type dismissHandler:(void (^)(GetSocialUser *user, BOOL didCancel))handler;
 
 #pragma mark - Extra UI
 /** @name Extra UI */

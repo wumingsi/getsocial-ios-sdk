@@ -80,4 +80,74 @@
  */
 - (void)resetWithSuccess:(GetSocialSuccessCallback)success failure:(GetSocialFailureCallback)failure;
 
+/**
+ *  Adds specified user to list of users who the current user is following
+ *
+ *  @param user    User to follow
+ *  @param success Block called if the user is followed
+ *  @param failure Block called if operation was not completed
+ */
+- (void)followUser:(GetSocialUser *)userToFollow success:(void (^)())success failure:(GetSocialFailureCallback)failure;
+
+/**
+ *  Adds user with specified userId and provider to list of users who the current user is following
+ *
+ *  @param provider Provider
+ *  @param userId   Id of user on the specified provider
+ *  @param success  Block called if the user is followed
+ *  @param failure  Block called if operation was not completed
+ */
+- (void)followUserWithProvider:(GetSocialProvider)provider
+                        userId:(NSString *)userId
+                       success:(GetSocialSuccessCallback)success
+                       failure:(GetSocialFailureCallback)failure;
+
+/**
+ *  Removes specified user from list of users who the current user is following
+ *
+ *  @param user     User to unfollow
+ *  @param success  Block called if the user is not followed
+ *  @param failure  Block called if operation was not completed
+ */
+- (void)unfollowUser:(GetSocialUser *)userToUnfollow success:(void (^)())success failure:(GetSocialFailureCallback)failure;
+
+/**
+ *  Removes user with specified userId and provider from list of users who the current user is following
+ *
+ *  @param provider Provider
+ *  @param userId   Id of user on the specified provider
+ *  @param success  Block called if the user is not followed
+ *  @param failure  Block called if operation was not completed
+ */
+- (void)unfollowUserWithProvider:(GetSocialProvider)provider
+                          userId:(NSString *)userId
+                         success:(GetSocialSuccessCallback)success
+                         failure:(GetSocialFailureCallback)failure;
+
+/**
+ *  Returns the list of followers for the current user
+ *
+ *  @param offset  Offset from which users will be retrieved
+ *  @param count   Count of users. Could be less than expected if there are less users
+ *  @param success Block called if the list is retrieved
+ *  @param failure Block called if operation was not completed
+ */
+- (void)followersWithOffset:(NSInteger)offset
+                      count:(NSInteger)count
+                    success:(void (^)(NSArray<GetSocialUser *> *))success
+                    failure:(GetSocialFailureCallback)failure;
+
+/**
+ *  Returns the list of users who the current user is following
+ *
+ *  @param offset  Offset from which users will be retrieved
+ *  @param count   Count of users. Could be less than expected if there are less users
+ *  @param success Block called if the list is retrieved
+ *  @param failure Block called if operation was not completed
+ */
+- (void)followingWithOffset:(NSInteger)offset
+                      count:(NSInteger)count
+                    success:(void (^)(NSArray<GetSocialUser *> *))success
+                    failure:(GetSocialFailureCallback)failure;
+
 @end
