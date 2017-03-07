@@ -97,6 +97,15 @@
 /**
  *  Creates chat view builder used to open the Chat View.
  *
+ *  @param userId Id of GetSocial User to chat with
+ *
+ *  @return An instance of GetSocialChatViewBuilder
+ */
+- (GetSocialChatViewBuilder *)createChatViewForUserId:(NSString *)userId;
+
+/**
+ *  Creates chat view builder used to open the Chat View.
+ *
  *  @param userId     Id of the user to chat with
  *  @param providerId Id of the external provider
  *
