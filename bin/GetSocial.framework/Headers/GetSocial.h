@@ -157,7 +157,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)referralDataWithSuccess:(GetSocialReferralDataCallback)success failure:(GetSocialFailureCallback)failure;
 
 #pragma mark - Push notifications
-
 /*!
  * @abstract If im.getsocial.sdk.AutoRegisterForPush meta property is set to false in the Info.plist,
  * call this method to register for push notifications.
